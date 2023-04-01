@@ -30,6 +30,8 @@ struct ContentView: View {
                     ForEach(courses) { course in
                         Text(course.name)
                     }
+                    .onDelete(perform: delete)
+
                 }
                 
                 Button(action: {
@@ -68,7 +70,13 @@ struct ContentView: View {
             }
         }
     }
+    
+    func delete(at offsets: IndexSet) {
+        courses.remove(atOffsets: offsets)
+    }
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
