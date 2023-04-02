@@ -31,9 +31,9 @@ struct ContentView: View {
                             .frame(width: geometry.size.width/1.2)
                             .transition(.move(edge: .leading))
                             .animation(.easeInOut(duration: 0.35))
+                            .gesture(drag)
                     }
                 }
-                .gesture(drag)
             }
             .navigationBarItems(leading: (
                 Button(action: {
@@ -57,7 +57,7 @@ struct MainView: View {
     @Binding var showSideBar: Bool
     
     var body: some View {
-        Courses()
+        CourseList()
     }
 }
 
