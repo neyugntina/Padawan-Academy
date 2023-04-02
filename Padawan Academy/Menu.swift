@@ -2,7 +2,7 @@
 //  Hamburger.swift
 //  Padawan Academy
 //
-//  Created by Sarah Eltell on 4/1/23.
+//  Created by Maria Doan on 4/1/23.
 //
 
 import SwiftUI
@@ -35,6 +35,17 @@ struct Menu: View {
                 Text("Settings")
                     .foregroundColor(.white)
                     .imageScale(.large)
+            }
+            .padding(.top, 30)
+            HStack {
+                NavigationLink(destination: LoginPage()) {
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                        .foregroundColor(.white)
+                        .imageScale(.large)
+                    Text("Logout")
+                        .foregroundColor(.white)
+                        .imageScale(.large)
+                }
             }
             .padding(.top, 30)
             Spacer()
