@@ -2,7 +2,7 @@
 //  SideBarMenu.swift
 //  Padawan Academy
 //
-//  Created by Sarah Eltell on 4/1/23.
+//  Created by Maria Doan on 4/1/23.
 //
 
 import SwiftUI
@@ -20,10 +20,10 @@ struct ShowSideBar: View {
                 }
             }
         
-        return NavigationView{
+        return NavigationView {
             GeometryReader { geometry in
                 ZStack(alignment: .leading){
-                    MainView(showSideBar: self.$showSideBar)
+                    CourseList()
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .offset(x: self.showSideBar ? geometry.size.width/1.2 : 0)
                         .disabled(self.showSideBar ? true : false)
@@ -42,7 +42,7 @@ struct ShowSideBar: View {
                         self.showSideBar.toggle()
                     }
                 }) {
-                    if !self.showSideBar{
+                    if !self.showSideBar {
                         Image(systemName: "person.circle")
                         .resizable()
                         .frame(width: 40.0, height: 40.0)
@@ -51,6 +51,7 @@ struct ShowSideBar: View {
                 }
             ))
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
