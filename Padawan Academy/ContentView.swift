@@ -16,8 +16,6 @@ struct ContentView: View {
                     withAnimation() {
                         self.showSideBar = false
                     }
-                    .onDelete(perform: delete)
-
                 }
             }
         
@@ -52,10 +50,6 @@ struct ContentView: View {
                 }
             ))
         }
-    }
-    
-    func delete(at offsets: IndexSet) {
-        courses.remove(atOffsets: offsets)
     }
 }
 
