@@ -20,12 +20,14 @@ struct Menu: View {
             }
             .padding(.top, 100)
             HStack {
-                Image(systemName: "book")
-                    .foregroundColor(.white)
-                    .imageScale(.large)
-                Text("Courses")
-                    .foregroundColor(.white)
-                    .imageScale(.large)
+                NavigationLink(destination: ShowSideBar()) {
+                    Image(systemName: "book")
+                        .foregroundColor(.white)
+                        .imageScale(.large)
+                    Text("Courses")
+                        .foregroundColor(.white)
+                        .imageScale(.large)
+                }
             }
             .padding(.top, 30)
             HStack {

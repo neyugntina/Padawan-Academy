@@ -36,20 +36,27 @@ struct ShowSideBar: View {
                     }
                 }
             }
-            .navigationBarItems(leading: (
+            .navigationBarItems(
+                leading: (
                 Button(action: {
                     withAnimation {
                         self.showSideBar.toggle()
                     }
-                }) {
+                })
+                {
                     if !self.showSideBar {
                         Image(systemName: "person.circle")
                         .resizable()
                         .frame(width: 40.0, height: 40.0)
                         .foregroundColor(.gray)
+                        .padding(.leading)
+                        Image("Image 1")
+                        .font(.largeTitle)
+                        .foregroundColor(.gray)
+                        .padding(.leading)
                     }
-                }
-            ))
+                })
+            )
         }
         .navigationBarBackButtonHidden(true)
     }
