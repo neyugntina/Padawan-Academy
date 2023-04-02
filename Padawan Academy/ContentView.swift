@@ -42,12 +42,10 @@ struct ContentView: View {
                     }
                 }) {
                     if !self.showSideBar{
-                        Image(systemName: "person")
-                        .imageScale(.large)
-                        .padding()
-                        .foregroundColor(.black)
-                        .background(.gray)
-                        .clipShape(Circle())
+                        Image(systemName: "person.circle")
+                        .resizable()
+                        .frame(width: 40.0, height: 40.0)
+                        .foregroundColor(.gray)
                     }
                 }
             ))
