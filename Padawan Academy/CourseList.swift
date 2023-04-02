@@ -20,53 +20,71 @@ struct CourseList: View {
     
     var body: some View {
         GeometryReader { geo in
+            NavigationView {
             ZStack {
-                Image("courses 1")
+                Image("Image")
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                     .frame(width: geo.size.width, height: geo.size.height)
                     .opacity(1.0)
                 
+//
+//
+//                VStack {
+//                    Text("Demo")
+//                        .font(.largeTitle)
+//                        .fontWeight(.bold)
+//                        .foregroundColor(.white)
+//
+//
+//                }
+                
                 VStack {
-                    Spacer()
-                    HStack {
-                        Text("Courses")
-                            .font(.largeTitle)
-                            .bold()
-                            .padding(.trailing, 225)
-                            .foregroundColor(.white)
-                    }
-                    
-                    Spacer()
-                    
-                    List {
-                        ForEach(courses) { course in CourseRow(course: course)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                Button(role: .destructive, action: {
-                                    if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
-                                        self.courses.remove(at: index)
-                                    }
-                                }, label: {
-                                    Label("Delete", systemImage: "trash")
-                                })
-                                Button(action: {
-                                    if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
-                                        self.courses.remove(at: index)
-                                    }
-                                }, label: {
-                                    Label("Edit", systemImage: "square.and.pencil")
-                                })
-                                .tint(.blue)
-                            }
+                        Spacer()
+                        HStack {
+                            Text("Courses")
+                                .font(.largeTitle)
+                                .bold()
+                                .padding(.trailing, 225)
+                                .foregroundColor(.white)
                         }
-                        .onDelete(perform: delete)
-                        .listRowBackground(Color.white)
                         
                         
-                    }
-                    .scrollContentBackground(.hidden)
+                        Spacer()
+                        
                     
+                        List {
+                            ForEach(courses) { course in
+                                NavigationLink(destination: QuestionsList())
+                                {
+                                    CourseRow(course: course)
+                                    
+                                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                            Button(role: .destructive
+                                                   , action: {
+                                                if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
+                                                    self.courses.remove(at: index)
+                                                }
+                                            }
+                                                   , label: {
+                                                Label("Delete", systemImage: "trash")
+                                            })
+                                            Button(action: {
+                                                if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
+                                                    self.courses.remove(at: index)
+                                                }
+                                            }, label: {
+                                                Label("Edit", systemImage: "square.and.pencil")
+                                            })
+                                            .tint(.blue)
+                                        }
+                                }
+                            }
+                                .onDelete(perform: delete)
+                                .listRowBackground(Color.white.opacity(0.5))
+                                
+                            }
                     Button(action: {
                         self.showAddCourse = true
                     }) {
@@ -79,55 +97,71 @@ struct CourseList: View {
                     .padding(.trailing, 20)
                     .padding(.bottom, 20)
                     .shadow(radius: 10)
-                }
+                        }
+                        .scrollContentBackground(.hidden)
+                        
+                        
+                        
+                    }
 //                    .navigationBarTitle("", displayMode: .inline)
 //                    .navigationBarHidden(false)
-                .sheet(isPresented: $showAddCourse) {
-                    VStack {
+                    .sheet(isPresented: $showAddCourse) {
+                        VStack {
 //                            Color.black
-                        
-                        Text("New Course")
-                            .fontWeight(.bold)
-                            .font(.largeTitle)
-                            .padding(.top, 50)
-                        Spacer()
-                        TextField("Enter course name", text: self.$newCourseName)
-//                                .padding(.bottom, 25)
-                            .multilineTextAlignment(.center)
-                            .font(.headline)
-                            .fontWeight(.medium)
-                            .padding(.all, 50)
-                            .background(.ultraThinMaterial)
-                            .cornerRadius(30)
-                            .padding()
-
-                        Spacer()
-
-                        Button(action: {
-                            self.courses.append(Course(name: self.newCourseName))
-                            self.showAddCourse = false
-                            self.newCourseName = ""
-                        }) {
-                            Text("Add")
-                                .padding()
-                                .background(Color.blue)
-                                
+//                            opacity(0.9)
+                            
+                            Text("New Course")
+                                .fontWeight(.bold)
                                 .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .padding(.bottom, 20)
+                                .font(.largeTitle)
+                                .padding(.top, 50)
+                            Spacer()
+                            TextField("Enter course name", text: self.$newCourseName)
+//                                .padding(.bottom, 25)
+                                .multilineTextAlignment(.center)
+                                .font(.headline)
+                                .fontWeight(.medium)
+                                .padding(.all, 20)
+                                .background(.ultraThinMaterial)
+                                .cornerRadius(30)
+                                .padding()
+
+                            Spacer()
+
+                            Button(action: {
+                                self.courses.append(Course(name: self.newCourseName))
+                                self.showAddCourse = false
+                                self.newCourseName = ""
+                            }) {
+                                Text("Add")
+                                    .padding()
+                                    .background(Color.yellow)
+                                    
+                                    .foregroundColor(.black)
+                                    .cornerRadius(10)
+                                    .padding(.bottom, 20)
+                            }
+                            
                         }
+                        .background(.opacity(0.8))
+//                        BottomSheetView()
+                        .presentationDetents([.height(300)])
                     }
-                    .presentationDetents([.height(300)])
-                }
+                
             }
+            
+
         }
-        .navigationBarBackButtonHidden(true)
+        
+        
     }
     
     func delete(at offsets: IndexSet) {
         courses.remove(atOffsets: offsets)
     }
+
 }
+
 
 struct CourseRow: View {
     let course: Course

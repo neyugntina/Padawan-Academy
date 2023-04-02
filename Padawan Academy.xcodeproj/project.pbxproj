@@ -20,6 +20,7 @@
 		9A7A856229D89C95003A2B74 /* Padawan_AcademyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7A856129D89C95003A2B74 /* Padawan_AcademyTests.swift */; };
 		9A7A856C29D89C95003A2B74 /* Padawan_AcademyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7A856B29D89C95003A2B74 /* Padawan_AcademyUITests.swift */; };
 		9A7A856E29D89C95003A2B74 /* Padawan_AcademyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7A856D29D89C95003A2B74 /* Padawan_AcademyUITestsLaunchTests.swift */; };
+		FB35DCE329D94C6700CA8211 /* QuestionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB35DCE229D94C6700CA8211 /* QuestionsList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		9A7A856729D89C95003A2B74 /* Padawan AcademyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Padawan AcademyUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A7A856B29D89C95003A2B74 /* Padawan_AcademyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padawan_AcademyUITests.swift; sourceTree = "<group>"; };
 		9A7A856D29D89C95003A2B74 /* Padawan_AcademyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padawan_AcademyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FB35DCE229D94C6700CA8211 /* QuestionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				9A7A855029D89C95003A2B74 /* Preview Content */,
 				3AB91FF029D8E0BE0079E22C /* Menu.swift */,
 				3AB91FF229D8E9FF0079E22C /* CourseList.swift */,
+				FB35DCE229D94C6700CA8211 /* QuestionsList.swift */,
 				3AB91FF429D937170079E22C /* ShowSideBar.swift */,
 				3AB91FF629D9387A0079E22C /* LoginPage.swift */,
 			);
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AB91FF729D9387A0079E22C /* LoginPage.swift in Sources */,
+				FB35DCE329D94C6700CA8211 /* QuestionsList.swift in Sources */,
 				3AB91FF529D937170079E22C /* ShowSideBar.swift in Sources */,
 				9A7A855429D89C95003A2B74 /* Persistence.swift in Sources */,
 				9A7A854D29D89C93003A2B74 /* ContentView.swift in Sources */,
