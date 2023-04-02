@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SideBarMenu: View {
+struct ShowSideBar: View {
     @State var showSideBar = false
     
     var body: some View {
@@ -56,6 +56,6 @@ struct SideBarMenu: View {
 
 struct SideBarMenu_Previews: PreviewProvider {
     static var previews: some View {
-        SideBarMenu()
+        ShowSideBar()
     }
 }

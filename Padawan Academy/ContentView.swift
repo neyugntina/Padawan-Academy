@@ -6,8 +6,9 @@ struct Course: Identifiable {
 }
 
 struct ContentView: View {
+    @State var loggedIn = false
     var body: some View {
-        SideBarMenu()
+        ShowSideBar()
     }
 }
 
@@ -15,7 +16,7 @@ struct MainView: View {
     @Binding var showSideBar: Bool
     
     var body: some View {
-        CourseList()
+        LoginPage()
     }
 }
 
