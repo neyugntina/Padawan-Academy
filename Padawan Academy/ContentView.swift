@@ -30,6 +30,7 @@ struct ContentView: View {
                         Menu()
                             .frame(width: geometry.size.width/1.2)
                             .transition(.move(edge: .leading))
+                            .animation(.easeInOut(duration: 0.35))
                     }
                 }
                 .gesture(drag)
