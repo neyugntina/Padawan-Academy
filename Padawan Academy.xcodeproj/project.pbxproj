@@ -93,7 +93,6 @@
 		9A7A853E29D89C93003A2B74 = {
 			isa = PBXGroup;
 			children = (
-				3AB91FFC29D98FB70079E22C /* SettingsView.swift */,
 				9A7A854929D89C93003A2B74 /* Padawan Academy */,
 				9A7A856029D89C95003A2B74 /* Padawan AcademyTests */,
 				9A7A856A29D89C95003A2B74 /* Padawan AcademyUITests */,
@@ -127,6 +126,7 @@
 				3AB91FF429D937170079E22C /* ShowSideBar.swift */,
 				3AB91FF629D9387A0079E22C /* LoginPage.swift */,
 				3AB91FFA29D98CFD0079E22C /* AccountPage.swift */,
+				3AB91FFC29D98FB70079E22C /* SettingsView.swift */,
 			);
 			path = "Padawan Academy";
 			sourceTree = "<group>";

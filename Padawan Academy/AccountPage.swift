@@ -31,7 +31,6 @@ struct AccountPage: View {
                     .background(Color.gray)
                     .cornerRadius(10)
             }
-            .navigationBarBackButtonHidden(true)
             .padding(.horizontal, 30)
             
             Spacer()
