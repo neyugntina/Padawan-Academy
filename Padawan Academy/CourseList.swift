@@ -56,10 +56,10 @@ struct CourseList: View {
                     
                         List {
                             ForEach(courses) { course in
-                                NavigationLink(destination: QuestionsList())
+                                NavigationLink(destination: QuestionsList(courseID: course.id))
                                 {
                                     CourseRow(course: course)
-                                    
+                    
                                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                             Button(role: .destructive
                                                    , action: {
@@ -97,6 +97,7 @@ struct CourseList: View {
                     .padding(.trailing, 20)
                     .padding(.bottom, 20)
                     .shadow(radius: 10)
+                    
                         }
                         .scrollContentBackground(.hidden)
                         
