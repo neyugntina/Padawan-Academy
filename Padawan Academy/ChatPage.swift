@@ -14,12 +14,12 @@ final class ViewModel: ObservableObject {
     private var client: OpenAISwift?
     
     func setup() {
-        client = OpenAISwift(authToken: "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")
+        client = OpenAISwift(authToken: "Put in your api token!")
     }
     
     
     func send(text: String, completion: @escaping (String) -> Void) {
-        client?.sendCompletion(with: text, maxTokens: 2000, completionHandler: {result in
+        client?.sendCompletion(with: text, maxTokens: 4000, completionHandler: {result in
             switch result {
             case .success(let model):
                 let output = model.choices.first?.text ?? ""
