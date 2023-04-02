@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Menu: View {
+    @Binding var userID: String
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -22,7 +23,7 @@ struct Menu: View {
             }
             .padding(.top, 100)
             HStack {
-                NavigationLink(destination: ShowSideBar()) {
+                NavigationLink(destination: ShowSideBar(userID: $userID)) {
                     Image(systemName: "book")
                         .foregroundColor(.white)
                         .imageScale(.large)
@@ -63,8 +64,8 @@ struct Menu: View {
     }
 }
 
-struct Hamburger_Previews: PreviewProvider {
-    static var previews: some View {
-        Menu()
-    }
-}
+//struct Hamburger_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Menu()
+//    }
+//}
