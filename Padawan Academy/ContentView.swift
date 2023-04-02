@@ -6,68 +6,51 @@ struct Course: Identifiable {
 }
 
 struct ContentView: View {
-    @State var courses: [Course] = [
-        Course(name: "Math"),
-        Course(name: "Science"),
-        Course(name: "English")
-    ]
-    
-    @State var showAddCourse = false
-    @State var newCourseName = ""
+    @State var showSideBar = false
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Spacer()
-                
-                Text("Courses")
-                    .font(.largeTitle)
-                    .padding(.top, 20)
-                
-                Spacer()
-                
-                List {
-                    ForEach(courses) { course in
-                        Text(course.name)
+        
+        let drag = DragGesture()
+            .onEnded {
+                if $0.translation.width < -100 {
+                    withAnimation() {
+                        self.showSideBar = false
                     }
                     .onDelete(perform: delete)
 
                 }
-                
-                Button(action: {
-                    self.showAddCourse = true
-                }) {
-                    Image(systemName: "plus")
-                        .padding()
-                        .foregroundColor(.white)
-                }
-                .background(Color.blue)
-                .clipShape(Circle())
-                .padding(.trailing, 20)
-                .padding(.bottom, 20)
-                .shadow(radius: 10)
             }
-            .navigationBarTitle("", displayMode: .inline)
-            .navigationBarHidden(true)
-            .sheet(isPresented: $showAddCourse) {
-                VStack {
-                    TextField("New course name", text: self.$newCourseName)
-                        .padding()
-                    
-                    Button(action: {
-                        self.courses.append(Course(name: self.newCourseName))
-                        self.showAddCourse = false
-                        self.newCourseName = ""
-                    }) {
-                        Text("Add")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+        
+        return NavigationView{
+            GeometryReader { geometry in
+                ZStack(alignment: .leading){
+                    MainView(showSideBar: self.$showSideBar)
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        .offset(x: self.showSideBar ? geometry.size.width/1.2 : 0)
+                        .disabled(self.showSideBar ? true : false)
+                    if self.showSideBar {
+                        Menu()
+                            .frame(width: geometry.size.width/1.2)
+                            .transition(.move(edge: .leading))
+                            .animation(.easeInOut(duration: 0.35))
+                            .gesture(drag)
                     }
                 }
-                .padding()
             }
+            .navigationBarItems(leading: (
+                Button(action: {
+                    withAnimation {
+                        self.showSideBar.toggle()
+                    }
+                }) {
+                    if !self.showSideBar{
+                        Image(systemName: "person.circle")
+                        .resizable()
+                        .frame(width: 40.0, height: 40.0)
+                        .foregroundColor(.gray)
+                    }
+                }
+            ))
         }
     }
     
@@ -76,7 +59,13 @@ struct ContentView: View {
     }
 }
 
-
+struct MainView: View {
+    @Binding var showSideBar: Bool
+    
+    var body: some View {
+        CourseList()
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
