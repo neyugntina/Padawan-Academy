@@ -7,24 +7,27 @@
 
 import SwiftUI
 
-struct Question: Identifiable {
+struct Question: Identifiable, Decodable {
     let id = UUID()
-    let question: String
+    let _id: String
+    let problem: String
+    let answer: String
+    let courseID: String
 }
 
 struct QuestionsList: View {
     
     @State var questions: [Question] = [
-        Question(question: "What is the meaning of life"),
-        Question(question: "How do I solve 2+2"),
-        Question(question: "What was Shakespeare's most famous work")
+//        Question(question: "What is the meaning of life"),
+//        Question(question: "How do I solve 2+2"),
+//        Question(question: "What was Shakespeare's most famous work")
     ]
-    
-    var courseID: UUID
+
+    var courseID: String = "642911122e52c5bd85d07b7c"
     
     
     @State var awake = false
-    @State var newCourseName = ""
+    @State var newQuestion = ""
     
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -89,8 +92,8 @@ struct QuestionsList: View {
                             
                                 List {
                                     ForEach(questions) { question in
-                                        NavigationLink(destination: QuestionsList(courseID: question.id))
-                                        {
+//                                        NavigationLink(destination: QuestionsList(courseID: problem.id))
+//                                        {
                                             
                                             QuestionRow(question: question)
                                             
@@ -113,7 +116,7 @@ struct QuestionsList: View {
                                                     })
                                                     .tint(.blue)
                                                 }
-                                        }
+//                                        }
                                     }
     //                                    .onDelete(perform: delete)
                                         .listRowBackground(Color.white.opacity(0.5))
@@ -173,6 +176,7 @@ struct QuestionsList: View {
                     }
                     .navigationBarBackButtonHidden(true)
                 }
+                .onAppear(perform: fetchQuestion)
 
                 
                     
@@ -238,6 +242,75 @@ struct QuestionsList: View {
 //        }
         
     }
+    func fetchQuestion() {
+        let urlString: String = "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/questions/list?id=642911122e52c5bd85d07b7c"
+        
+        var request = URLRequest(url: URL(string: urlString)!,timeoutInterval: Double.infinity)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print(String(describing: error))
+                return
+            }
+            print(String(data: data, encoding: .utf8)!)
+            questions = []
+        do {
+            print("help4")
+            let decodedData = try JSONDecoder().decode([Question].self, from: data)
+            print("help3")
+            DispatchQueue.main.async {
+                print("help")
+                self.questions.append(contentsOf: decodedData)
+                print("huhhhhh", decodedData)
+            }
+        } catch {
+            print(String(describing: error))
+            print("Error decoding data: \(error.localizedDescription)")
+        }
+    }
+        task.resume()
+    }
+    
+//    func createQuestion() {
+//        let parameters = ["name": newCourseName, "description": newDescName, "userID": "234234234"]
+//        let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+//        let jsonString = String(data: jsonData, encoding: .utf8)!
+//        let postData = jsonString.data(using: .utf8)
+//
+//
+//        var request = URLRequest(url: URL(string: "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/course")!,timeoutInterval: Double.infinity)
+//        request.addValue("text/plain", forHTTPHeaderField: "Content-Type")
+//
+//        request.httpMethod = "POST"
+//        request.httpBody = postData
+//
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//          guard let data = data else {
+//            print(String(describing: error))
+//            return
+//          }
+//          print(String(data: data, encoding: .utf8)!)
+//        }
+//        fetchCourse()
+//        task.resume()
+//    }
+//
+//    func deleteQuestion(courseId: String) {
+//        var urlString = "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/course?id=" + courseId
+//        var request = URLRequest(url: URL(string: urlString)!,timeoutInterval: Double.infinity)
+//        request.httpMethod = "DELETE"
+//
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//          guard let data = data else {
+//            print(String(describing: error))
+//            return
+//          }
+//          print(String(data: data, encoding: .utf8)!)
+//        }
+//
+//        task.resume()
+//    }
 }
 
 struct QuestionRow: View {
@@ -247,7 +320,7 @@ struct QuestionRow: View {
         VStack {
             Spacer()
             HStack {
-                Text(question.question)
+                Text(question.problem)
                     .font(.headline)
                     .foregroundColor(.primary)
                 Spacer()
@@ -257,7 +330,7 @@ struct QuestionRow: View {
             }
             Spacer()
             HStack {
-                Text("question details")
+                Text(question.answer)
                     .font(.caption)
                     .foregroundColor(.primary)
                 Spacer()

@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct CourseList: View {
-    
     @State var courses: [Course] = [
-        Course(name: "Calculus 1511"),
-        Course(name: "Operating Systems 2422"),
-        Course(name: "Linear Algebra 3333")
+//        Course(name: "Calculus 1511"),
+//        Course(name: "Operating Systems 2422"),
+//        Course(name: "Linear Algebra 3333")
     ]
     
+    @Binding var userID: String
     @State var showAddCourse = false
     @State var newCourseName = ""
+    @State var newDescName = ""
     
     var body: some View {
         GeometryReader { geo in
@@ -28,17 +29,6 @@ struct CourseList: View {
                     .edgesIgnoringSafeArea(.all)
                     .frame(width: geo.size.width, height: geo.size.height)
                     .opacity(1.0)
-                
-//
-//
-//                VStack {
-//                    Text("Demo")
-//                        .font(.largeTitle)
-//                        .fontWeight(.bold)
-//                        .foregroundColor(.white)
-//
-//
-//                }
                 
                 VStack {
                         Spacer()
@@ -52,18 +42,18 @@ struct CourseList: View {
                         
                         
                         Spacer()
-                        
                     
                         List {
                             ForEach(courses) { course in
-                                NavigationLink(destination: QuestionsList(courseID: course.id))
+                                NavigationLink(destination: QuestionsList())
                                 {
                                     CourseRow(course: course)
-                    
+                                    
                                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                             Button(role: .destructive
                                                    , action: {
                                                 if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
+                                                    deleteCourse(courseId: course._id)
                                                     self.courses.remove(at: index)
                                                 }
                                             }
@@ -72,7 +62,7 @@ struct CourseList: View {
                                             })
                                             Button(action: {
                                                 if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
-                                                    self.courses.remove(at: index)
+//                                                    self.courses.remove(at: index)
                                                 }
                                             }, label: {
                                                 Label("Edit", systemImage: "square.and.pencil")
@@ -97,10 +87,9 @@ struct CourseList: View {
                     .padding(.trailing, 20)
                     .padding(.bottom, 20)
                     .shadow(radius: 10)
-                    
                         }
                         .scrollContentBackground(.hidden)
-                        
+                        .onAppear(perform: fetchCourse)
                         
                         
                     }
@@ -108,8 +97,6 @@ struct CourseList: View {
 //                    .navigationBarHidden(false)
                     .sheet(isPresented: $showAddCourse) {
                         VStack {
-//                            Color.black
-//                            opacity(0.9)
                             
                             Text("New Course")
                                 .fontWeight(.bold)
@@ -126,22 +113,35 @@ struct CourseList: View {
                                 .background(.ultraThinMaterial)
                                 .cornerRadius(30)
                                 .padding()
+                            TextField("Enter description name", text: self.$newDescName)
+//                                .padding(.bottom, 25)
+                                .multilineTextAlignment(.center)
+                                .font(.headline)
+                                .fontWeight(.medium)
+                                .padding(.all, 20)
+                                .background(.ultraThinMaterial)
+                                .cornerRadius(30)
+                                .padding()
 
                             Spacer()
 
                             Button(action: {
-                                self.courses.append(Course(name: self.newCourseName))
+                                createCourse()
+//                                self.courses.append(Course(from: self.courses))
                                 self.showAddCourse = false
                                 self.newCourseName = ""
                             }) {
                                 Text("Add")
                                     .padding()
                                     .background(Color.yellow)
-                                    
                                     .foregroundColor(.black)
                                     .cornerRadius(10)
                                     .padding(.bottom, 20)
-                                
+//                                    .onTapGesture {
+//                                     createPosts()
+//                                    }
+                                    
+                                    
                             }
                             
                         }
@@ -154,14 +154,85 @@ struct CourseList: View {
             
 
         }
-        .navigationBarBackButtonHidden(true)
+        
         
     }
     
     func delete(at offsets: IndexSet) {
         courses.remove(atOffsets: offsets)
     }
+    
+    func fetchCourse() {
+        
+        let urlString: String = "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/course/list?id="+self.userID
+        
+        print(self.userID)
+        var request = URLRequest(url: URL(string: urlString)!,timeoutInterval: Double.infinity)
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print(String(describing: error))
+                return
+            }
+            print(String(data: data, encoding: .utf8)!)
+            courses = []
+        do {
+            print("help4")
+            let decodedData = try JSONDecoder().decode([Course].self, from: data)
+            print("help3")
+            DispatchQueue.main.async {
+                print("help")
+                self.courses.append(contentsOf: decodedData)
+                print("huhhhhh", decodedData)
+            }
+        } catch {
+            print(String(describing: error))
+            print("Error decoding data: \(error.localizedDescription)")
+        }
+    }
+        task.resume()
+    }
+    
+    func createCourse() {
+        let parameters = ["name": newCourseName, "description": newDescName, "userID": "234234234"]
+        let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        let jsonString = String(data: jsonData, encoding: .utf8)!
+        let postData = jsonString.data(using: .utf8)
+        
 
+        var request = URLRequest(url: URL(string: "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/course")!,timeoutInterval: Double.infinity)
+        request.addValue("text/plain", forHTTPHeaderField: "Content-Type")
+
+        request.httpMethod = "POST"
+        request.httpBody = postData
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+            print(String(describing: error))
+            return
+          }
+          print(String(data: data, encoding: .utf8)!)
+        }
+        fetchCourse()
+        task.resume()
+    }
+    
+    func deleteCourse(courseId: String) {
+        var urlString = "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/course?id=" + courseId
+        var request = URLRequest(url: URL(string: urlString)!,timeoutInterval: Double.infinity)
+        request.httpMethod = "DELETE"
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+            print(String(describing: error))
+            return
+          }
+          print(String(data: data, encoding: .utf8)!)
+        }
+
+        task.resume()
+    }
 }
 
 
@@ -182,7 +253,7 @@ struct CourseRow: View {
             }
             Spacer()
             HStack {
-                Text("course details")
+                Text(course.description)
                     .font(.caption)
                     .foregroundColor(.primary)
                 Spacer()
@@ -192,34 +263,8 @@ struct CourseRow: View {
     }
 }
 
-//struct BottomSheetView: View {
-//    var body: some View {
-//        VStack {
-//            Color.white
-//            //            TextField("New course name", text: $newCourseName)
-////                .padding()
-////
-////            Button(action: {
-////                self.courses.append(Course(name: self.newCourseName))
-////                self.showAddCourse = false
-////                self.newCourseName = ""
-////            }) {
-////                Text("Add")
-////                    .padding()
-////                    .background(Color.blue)
-////                    .foregroundColor(.white)
-////                    .cornerRadius(10)
-////            }
-////            Text("Testing")
-//        }
-////        .foregroundColor(.red)
-//        .background(.red)
+//struct CourseList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CourseList()
 //    }
 //}
-
-
-struct CourseList_Previews: PreviewProvider {
-    static var previews: some View {
-        CourseList()
-    }
-}
