@@ -21,7 +21,7 @@ struct CourseList: View {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                Image("courses 1")
+                Image("Image")
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
@@ -76,7 +76,7 @@ struct CourseList: View {
                                     }
                             }
                             .onDelete(perform: delete)
-                            .listRowBackground(Color.white)
+                            .listRowBackground(Color.white.opacity(0.5))
                             
                             
                         }
@@ -100,9 +100,11 @@ struct CourseList: View {
                     .sheet(isPresented: $showAddCourse) {
                         VStack {
 //                            Color.black
+//                            opacity(0.9)
                             
                             Text("New Course")
                                 .fontWeight(.bold)
+                                .foregroundColor(.white)
                                 .font(.largeTitle)
                                 .padding(.top, 50)
                             Spacer()
@@ -111,7 +113,7 @@ struct CourseList: View {
                                 .multilineTextAlignment(.center)
                                 .font(.headline)
                                 .fontWeight(.medium)
-                                .padding(.all, 50)
+                                .padding(.all, 20)
                                 .background(.ultraThinMaterial)
                                 .cornerRadius(30)
                                 .padding()
@@ -125,15 +127,15 @@ struct CourseList: View {
                             }) {
                                 Text("Add")
                                     .padding()
-                                    .background(Color.blue)
+                                    .background(Color.yellow)
                                     
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                                     .cornerRadius(10)
                                     .padding(.bottom, 20)
                             }
                             
                         }
-//                        .background(.red)
+                        .background(.opacity(0.8))
 //                        BottomSheetView()
                         .presentationDetents([.height(300)])
                     }
