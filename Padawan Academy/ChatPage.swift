@@ -14,11 +14,12 @@ final class ViewModel: ObservableObject {
     private var client: OpenAISwift?
     
     func setup() {
-        client = OpenAISwift(authToken: "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")
+        client = OpenAISwift(authToken: "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")
     }
     
+    
     func send(text: String, completion: @escaping (String) -> Void) {
-        client?.sendCompletion(with: text, maxTokens: 500, completionHandler: {result in
+        client?.sendCompletion(with: text, maxTokens: 2000, completionHandler: {result in
             switch result {
             case .success(let model):
                 let output = model.choices.first?.text ?? ""
@@ -103,13 +104,36 @@ struct ChatPage: View {
         }
         
         models.append("Me: \(text)")
-        viewModel.send(text: text) { response in
+        let prompt = "determine the processes to answer the following without solving the question: \n" + text
+        viewModel.send(text: prompt) { response in
             DispatchQueue.main.async {
                 self.models.append("ChatGPT: \(response)")
                 self.text = ""
             }
-            
+            createQuestion(answer: response)
         }
+    }
+    func createQuestion(answer: String) {
+        let parameters = ["problem": text, "answer": answer, "courseID": "642911122e52c5bd85d07b7c"]
+        let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        let jsonString = String(data: jsonData, encoding: .utf8)!
+        let postData = jsonString.data(using: .utf8)
+
+
+        var request = URLRequest(url: URL(string: "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/questions")!,timeoutInterval: Double.infinity)
+        request.addValue("text/plain", forHTTPHeaderField: "Content-Type")
+
+        request.httpMethod = "POST"
+        request.httpBody = postData
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+            print(String(describing: error))
+            return
+          }
+          print(String(data: data, encoding: .utf8)!)
+        }
+        task.resume()
     }
 }
             

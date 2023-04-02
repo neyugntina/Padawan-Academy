@@ -91,7 +91,6 @@ struct CourseList: View {
                         .scrollContentBackground(.hidden)
                         .onAppear(perform: fetchCourse)
                         
-                        
                     }
 //                    .navigationBarTitle("", displayMode: .inline)
 //                    .navigationBarHidden(false)
@@ -161,7 +160,9 @@ struct CourseList: View {
     func delete(at offsets: IndexSet) {
         courses.remove(atOffsets: offsets)
     }
-    
+    func clearCourses() {
+        courses = []
+    }
     func fetchCourse() {
         
         let urlString: String = "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/course/list?id="+self.userID
@@ -169,14 +170,14 @@ struct CourseList: View {
         print(self.userID)
         var request = URLRequest(url: URL(string: urlString)!,timeoutInterval: Double.infinity)
         request.httpMethod = "GET"
-        
+        courses = []
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 print(String(describing: error))
                 return
             }
             print(String(data: data, encoding: .utf8)!)
-            courses = []
+            
         do {
             print("help4")
             let decodedData = try JSONDecoder().decode([Course].self, from: data)
@@ -195,7 +196,7 @@ struct CourseList: View {
     }
     
     func createCourse() {
-        let parameters = ["name": newCourseName, "description": newDescName, "userID": "234234234"]
+        let parameters = ["name": newCourseName, "description": newDescName, "userID": userID]
         let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
         let jsonString = String(data: jsonData, encoding: .utf8)!
         let postData = jsonString.data(using: .utf8)

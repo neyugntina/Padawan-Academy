@@ -272,29 +272,7 @@ struct QuestionsList: View {
         task.resume()
     }
     
-//    func createQuestion() {
-//        let parameters = ["name": newCourseName, "description": newDescName, "userID": "234234234"]
-//        let jsonData = try! JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-//        let jsonString = String(data: jsonData, encoding: .utf8)!
-//        let postData = jsonString.data(using: .utf8)
-//
-//
-//        var request = URLRequest(url: URL(string: "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/course")!,timeoutInterval: Double.infinity)
-//        request.addValue("text/plain", forHTTPHeaderField: "Content-Type")
-//
-//        request.httpMethod = "POST"
-//        request.httpBody = postData
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//          guard let data = data else {
-//            print(String(describing: error))
-//            return
-//          }
-//          print(String(data: data, encoding: .utf8)!)
-//        }
-//        fetchCourse()
-//        task.resume()
-//    }
+    
 //
 //    func deleteQuestion(courseId: String) {
 //        var urlString = "https://8lbmp14qj1.execute-api.us-east-2.amazonaws.com/dev/course?id=" + courseId
