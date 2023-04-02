@@ -141,6 +141,7 @@ struct CourseList: View {
                                     .foregroundColor(.black)
                                     .cornerRadius(10)
                                     .padding(.bottom, 20)
+                                
                             }
                             
                         }
