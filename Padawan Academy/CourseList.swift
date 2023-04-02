@@ -20,6 +20,7 @@ struct CourseList: View {
     
     var body: some View {
         GeometryReader { geo in
+            NavigationView {
             ZStack {
                 Image("Image")
                     .resizable()
@@ -52,48 +53,55 @@ struct CourseList: View {
                         
                         Spacer()
                         
+                    
                         List {
                             ForEach(courses) { course in
-                                CourseRow(course: course)
-                                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                        Button(role: .destructive
-                                               , action: {
-                                                                                    if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
-                                                                                        self.courses.remove(at: index)
-                                                                                    }
+                                NavigationLink(destination: QuestionsList())
+                                {
+                                    CourseRow(course: course)
+                                    
+                                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                            Button(role: .destructive
+                                                   , action: {
+                                                if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
+                                                    self.courses.remove(at: index)
+                                                }
+                                            }
+                                                   , label: {
+                                                Label("Delete", systemImage: "trash")
+                                            })
+                                            Button(action: {
+                                                if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
+                                                    self.courses.remove(at: index)
+                                                }
+                                            }, label: {
+                                                Label("Edit", systemImage: "square.and.pencil")
+                                            })
+                                            .tint(.blue)
                                         }
-                                               , label: {
-                                            Label("Delete", systemImage: "trash")
-                                        })
-                                        Button(action: {
-                                                                                    if let index = self.courses.firstIndex(where: { $0.id == course.id }) {
-                                                                                        self.courses.remove(at: index)
-                                                                                    }
-                                        }, label: {
-                                            Label("Edit", systemImage: "square.and.pencil")
-                                        })
-                                        .tint(.blue)
-                                    }
+                                }
                             }
-                            .onDelete(perform: delete)
-                            .listRowBackground(Color.white.opacity(0.5))
-                            
-                            
+                                .onDelete(perform: delete)
+                                .listRowBackground(Color.white.opacity(0.5))
+                                
+                            }
+                    Button(action: {
+                        self.showAddCourse = true
+                    }) {
+                        Image(systemName: "plus")
+                            .padding()
+                            .foregroundColor(.black)
+                    }
+                    .background(Color.yellow)
+                    .clipShape(Circle())
+                    .padding(.trailing, 20)
+                    .padding(.bottom, 20)
+                    .shadow(radius: 10)
                         }
                         .scrollContentBackground(.hidden)
                         
-                        Button(action: {
-                            self.showAddCourse = true
-                        }) {
-                            Image(systemName: "plus")
-                                .padding()
-                                .foregroundColor(.black)
-                        }
-                        .background(Color.yellow)
-                        .clipShape(Circle())
-                        .padding(.trailing, 20)
-                        .padding(.bottom, 20)
-                        .shadow(radius: 10)
+                        
+                        
                     }
 //                    .navigationBarTitle("", displayMode: .inline)
 //                    .navigationBarHidden(false)
@@ -153,6 +161,7 @@ struct CourseList: View {
     }
 
 }
+
 
 struct CourseRow: View {
     let course: Course
