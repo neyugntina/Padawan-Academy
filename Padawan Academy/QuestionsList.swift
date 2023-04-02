@@ -52,106 +52,133 @@ struct QuestionsList: View {
 //        .navigationBarItems(leading: btnBack)
         
             GeometryReader { geo in
-                NavigationView {
+//                NavigationView {
                 ZStack {
-                    Image("Image")
-                        .resizable()
-                        .scaledToFill()
-                        .edgesIgnoringSafeArea(.all)
-                        .frame(width: geo.size.width, height: geo.size.height)
-                        .opacity(1.0)
-                    
-    //
-    //
-    //                VStack {
-    //                    Text("Demo")
-    //                        .font(.largeTitle)
-    //                        .fontWeight(.bold)
-    //                        .foregroundColor(.white)
-    //
-    //
-    //                }
-                    
-                    VStack {
-                            Spacer()
-                            HStack {
-                                Text("Questions")
-                                    .font(.largeTitle)
-                                    .bold()
-                                    .padding(.trailing, 175)
-                                    .foregroundColor(.white)
+                    ZStack {
+                        Image("Image")
+                            .resizable()
+                            .scaledToFill()
+                            .edgesIgnoringSafeArea(.all)
+                            .frame(width: geo.size.width, height: geo.size.height)
+                            .opacity(1.0)
+                        
+        //
+        //
+        //                VStack {
+        //                    Text("Demo")
+        //                        .font(.largeTitle)
+        //                        .fontWeight(.bold)
+        //                        .foregroundColor(.white)
+        //
+        //
+        //                }
+                        
+                        VStack {
+                                Spacer()
+                                HStack {
+                                    Text("Questions")
+                                        .font(.largeTitle)
+                                        .bold()
+                                        .padding(.trailing, 175)
+                                        .foregroundColor(.white)
+                                }
+                                
+                                
+                                Spacer()
+                                
+                            
+                                List {
+                                    ForEach(questions) { question in
+                                        NavigationLink(destination: QuestionsList(courseID: question.id))
+                                        {
+                                            
+                                            QuestionRow(question: question)
+                                            
+                                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                                    Button(role: .destructive
+                                                           , action: {
+                                                        if let index = self.questions.firstIndex(where: { $0.id == question.id }) {
+                                                            self.questions.remove(at: index)
+                                                        }
+                                                    }
+                                                           , label: {
+                                                        Label("Delete", systemImage: "trash")
+                                                    })
+                                                    Button(action: {
+                                                        if let index = self.questions.firstIndex(where: { $0.id == question.id }) {
+                                                            self.questions.remove(at: index)
+                                                        }
+                                                    }, label: {
+                                                        Label("Edit", systemImage: "square.and.pencil")
+                                                    })
+                                                    .tint(.blue)
+                                                }
+                                        }
+                                    }
+    //                                    .onDelete(perform: delete)
+                                        .listRowBackground(Color.white.opacity(0.5))
+                                        
+                                    }
+    //                        Button(action: {
+    //                            self.showAddCourse = true
+    //                        }) {
+    //                            Image(systemName: "plus")
+    //                                .padding()
+    //                                .foregroundColor(.black)
+    //                        }
+    //                        .background(Color.yellow)
+    //                        .clipShape(Circle())
+    //                        .padding(.trailing, 20)
+    //                        .padding(.bottom, 20)
+    //                        .shadow(radius: 10)
+                            
+                                }
+                        .overlay {
+                            if awake {
+                                ChatPage()
+                            }
+                        }
+                                .scrollContentBackground(.hidden)
+                                
+                            
+                        Button(action: {
+                            withAnimation {
+                                self.awake.toggle()
+                            }
+                        }) {
+                            if awake {
+                                Image("yoda")
+                                    .resizable()
+                                    .clipShape(Circle())
+        //                            .padding()
+                                    .frame(width: 100, height: 100)
+                                    .foregroundColor(.black)
+                            } else if awake == false {
+                                Image("yodasleep")
+                                    .resizable()
+                                    .clipShape(Circle())
+        //                            .padding()
+                                    .frame(width: 100, height: 100)
+                                    .foregroundColor(.black)
                             }
                             
-                            
-                            Spacer()
-                            
-                        
-                            List {
-                                ForEach(questions) { question in
-                                    NavigationLink(destination: QuestionsList(courseID: question.id))
-                                    {
-                                        
-                                        QuestionRow(question: question)
-                                        
-                                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                                Button(role: .destructive
-                                                       , action: {
-                                                    if let index = self.questions.firstIndex(where: { $0.id == question.id }) {
-                                                        self.questions.remove(at: index)
-                                                    }
-                                                }
-                                                       , label: {
-                                                    Label("Delete", systemImage: "trash")
-                                                })
-                                                Button(action: {
-                                                    if let index = self.questions.firstIndex(where: { $0.id == question.id }) {
-                                                        self.questions.remove(at: index)
-                                                    }
-                                                }, label: {
-                                                    Label("Edit", systemImage: "square.and.pencil")
-                                                })
-                                                .tint(.blue)
-                                            }
-                                    }
-                                }
-//                                    .onDelete(perform: delete)
-                                    .listRowBackground(Color.white.opacity(0.5))
-                                    
-                                }
-//                        Button(action: {
-//                            self.showAddCourse = true
-//                        }) {
-//                            Image(systemName: "plus")
-//                                .padding()
-//                                .foregroundColor(.black)
-//                        }
-//                        .background(Color.yellow)
-//                        .clipShape(Circle())
-//                        .padding(.trailing, 20)
-//                        .padding(.bottom, 20)
-//                        .shadow(radius: 10)
-                        Button(action: {
-                            self.awake.toggle()
-                        }) {
-                            Image("yoda")
-                                .resizable()
-                                .clipShape(Circle())
-    //                            .padding()
-                                .frame(width: 100, height: 100)
-                                .foregroundColor(.black)
                                 
                         }
                         .background(Color.secondary)
                         .clipShape(Circle())
-                        .padding(.trailing, 20)
+                        .padding(.top, 600)
+                        .padding(.trailing, 300)
                         .padding(.bottom, 20)
                         .shadow(radius: 10)
-                            }
-                            .scrollContentBackground(.hidden)
-                            
-                            
-                        
-                        }
+                    }
+                    .navigationBarBackButtonHidden(true)
+                }
+
+                
+                    
+                
+                    
+
     //                    .navigationBarTitle("", displayMode: .inline)
     //                    .navigationBarHidden(false)
 //                        .sheet(isPresented: $awake) {
@@ -197,7 +224,8 @@ struct QuestionsList: View {
 //                            .presentationDetents([.height(300)])
 //                        }
                     
-                }
+//                }
+                
                 
 
             }
