@@ -11,6 +11,8 @@
 		3AB91FF329D8E9FF0079E22C /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB91FF229D8E9FF0079E22C /* CourseList.swift */; };
 		3AB91FF529D937170079E22C /* ShowSideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB91FF429D937170079E22C /* ShowSideBar.swift */; };
 		3AB91FF729D9387A0079E22C /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB91FF629D9387A0079E22C /* LoginPage.swift */; };
+		3AB91FFB29D98CFD0079E22C /* AccountPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB91FFA29D98CFD0079E22C /* AccountPage.swift */; };
+		3AB91FFD29D98FB70079E22C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB91FFC29D98FB70079E22C /* SettingsView.swift */; };
 		9A7A854B29D89C93003A2B74 /* Padawan_AcademyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7A854A29D89C93003A2B74 /* Padawan_AcademyApp.swift */; };
 		9A7A854D29D89C93003A2B74 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7A854C29D89C93003A2B74 /* ContentView.swift */; };
 		9A7A854F29D89C95003A2B74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A7A854E29D89C95003A2B74 /* Assets.xcassets */; };
@@ -45,6 +47,8 @@
 		3AB91FF229D8E9FF0079E22C /* CourseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseList.swift; sourceTree = "<group>"; };
 		3AB91FF429D937170079E22C /* ShowSideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSideBar.swift; sourceTree = "<group>"; };
 		3AB91FF629D9387A0079E22C /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
+		3AB91FFA29D98CFD0079E22C /* AccountPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPage.swift; sourceTree = "<group>"; };
+		3AB91FFC29D98FB70079E22C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9A7A854729D89C93003A2B74 /* Padawan Academy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Padawan Academy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A7A854A29D89C93003A2B74 /* Padawan_AcademyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padawan_AcademyApp.swift; sourceTree = "<group>"; };
 		9A7A854C29D89C93003A2B74 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,6 +93,7 @@
 		9A7A853E29D89C93003A2B74 = {
 			isa = PBXGroup;
 			children = (
+				3AB91FFC29D98FB70079E22C /* SettingsView.swift */,
 				9A7A854929D89C93003A2B74 /* Padawan Academy */,
 				9A7A856029D89C95003A2B74 /* Padawan AcademyTests */,
 				9A7A856A29D89C95003A2B74 /* Padawan AcademyUITests */,
@@ -121,6 +126,7 @@
 				FB35DCE229D94C6700CA8211 /* QuestionsList.swift */,
 				3AB91FF429D937170079E22C /* ShowSideBar.swift */,
 				3AB91FF629D9387A0079E22C /* LoginPage.swift */,
+				3AB91FFA29D98CFD0079E22C /* AccountPage.swift */,
 			);
 			path = "Padawan Academy";
 			sourceTree = "<group>";
@@ -284,11 +290,13 @@
 				FB35DCE329D94C6700CA8211 /* QuestionsList.swift in Sources */,
 				3AB91FF529D937170079E22C /* ShowSideBar.swift in Sources */,
 				9A7A855429D89C95003A2B74 /* Persistence.swift in Sources */,
+				3AB91FFB29D98CFD0079E22C /* AccountPage.swift in Sources */,
 				9A7A854D29D89C93003A2B74 /* ContentView.swift in Sources */,
 				3AB91FF329D8E9FF0079E22C /* CourseList.swift in Sources */,
 				9A7A854B29D89C93003A2B74 /* Padawan_AcademyApp.swift in Sources */,
 				9A7A855729D89C95003A2B74 /* Padawan_Academy.xcdatamodeld in Sources */,
 				3AB91FF129D8E0BE0079E22C /* Menu.swift in Sources */,
+				3AB91FFD29D98FB70079E22C /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,12 +11,14 @@ struct Menu: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "person")
-                    .foregroundColor(.white)
-                    .imageScale(.large)
-                Text("Account")
-                    .foregroundColor(.white)
-                    .imageScale(.large)
+                NavigationLink(destination: AccountPage()) {
+                    Image(systemName: "person")
+                        .foregroundColor(.white)
+                        .imageScale(.large)
+                    Text("Account")
+                        .foregroundColor(.white)
+                        .imageScale(.large)
+                }
             }
             .padding(.top, 100)
             HStack {
@@ -31,12 +33,14 @@ struct Menu: View {
             }
             .padding(.top, 30)
             HStack {
-                Image(systemName: "gear")
-                    .foregroundColor(.white)
-                    .imageScale(.large)
-                Text("Settings")
-                    .foregroundColor(.white)
-                    .imageScale(.large)
+                NavigationLink(destination: SettingsView()) {
+                    Image(systemName: "gear")
+                        .foregroundColor(.white)
+                        .imageScale(.large)
+                    Text("Settings")
+                        .foregroundColor(.white)
+                        .imageScale(.large)
+                }
             }
             .padding(.top, 30)
             HStack {
