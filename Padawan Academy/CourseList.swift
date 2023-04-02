@@ -153,7 +153,7 @@ struct CourseList: View {
             
 
         }
-        
+        .navigationBarBackButtonHidden(true)
         
     }
     
