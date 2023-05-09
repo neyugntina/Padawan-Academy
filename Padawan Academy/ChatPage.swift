@@ -14,7 +14,7 @@ final class ViewModel: ObservableObject {
     private var client: OpenAISwift?
     
     func setup() {
-        client = OpenAISwift(authToken: "Put in your api token!")
+        client = OpenAISwift(authToken: "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")
     }
     
     
@@ -37,21 +37,6 @@ struct ChatPage: View {
     @ObservedObject var viewModel = ViewModel()
     @State var text = ""
     @State var models = [String]()
-    
-    //    let openAI = OpenAISwift(authToken: "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")
-    //
-    //    @State private var search: String = ""
-    //
-    //    private func performOpenAISearch(){
-    //        openAI.sendCompletion(with: search) { result in
-    //            switch result {
-    //            case .success(let success):
-    //                print(success.choices.first?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
-    //            case .failure(let failure):
-    //                print(failure.localizedDescription)
-    //            }
-    //        }
-    //    }
     
     var body: some View {
     
@@ -104,10 +89,10 @@ struct ChatPage: View {
         }
         
         models.append("Me: \(text)")
-        let prompt = "determine the processes to answer the following without solving the question: \n" + text
+        let prompt = "Determine the processes to answer the following without solving the question while roleplaying as Yoda: \n" + text
         viewModel.send(text: prompt) { response in
             DispatchQueue.main.async {
-                self.models.append("ChatGPT: \(response)")
+                self.models.append("Yoda: \(response)")
                 self.text = ""
             }
             createQuestion(answer: response)
